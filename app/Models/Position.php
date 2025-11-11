@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Department extends Model
+class Position extends Model
 {
+    //
     use SoftDeletes;
 
-    public function positions()
+    public function department()
     {
-        return $this->hasMany(Position::class);
+        return $this->belongsTo(Department::class);
     }
 }
