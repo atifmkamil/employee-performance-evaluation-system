@@ -42,6 +42,8 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
+            ->spa()
+            ->sidebarCollapsibleOnDesktop()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -55,7 +57,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
-        // ->plugin(FilamentSpatieRolesPermissionsPlugin::make());
+            ])
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make());
     }
 }
