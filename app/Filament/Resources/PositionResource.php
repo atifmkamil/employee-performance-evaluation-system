@@ -28,7 +28,7 @@ class PositionResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('department_id')
                     ->label('Department')
-                    ->relationship('department', 'name') // 🔥 easiest way
+                    ->relationship('department', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
