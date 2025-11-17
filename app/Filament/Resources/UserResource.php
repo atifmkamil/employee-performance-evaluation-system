@@ -49,34 +49,11 @@ class UserResource extends Resource
                     ->reactive()
                     ->required()
                     ->label('Role'),
-                // Select::make('role')
-                //     ->relationship('positions', 'name')
-                //     ->preload()
-                //     ->reactive()
-                //     ->required()
-                //     ->label('Role'),
-                // Select::make('position_id')
-                //     ->relationship('position', 'name') // tetap gunakan relationship untuk preload
-                //     ->reactive()
-                //     ->required(function (callable $get) {
-                //         // Ambil ID 'Pegawai' di dalam closure ini
-                //         $pegawaiRoleId = Role::where('name', 'Pegawai')->value('id');
-                //         return $get('role') == $pegawaiRoleId;
-                //     })
-                //     ->preload()
-                //     ->label('Jabatan')
-                //     ->visible(function (callable $get) {
-                //         // Ambil ID 'Pegawai' di dalam closure ini
-                //         $pegawaiRoleId = Role::where('name', 'Pegawai')->value('id');
-                //         return $get('role') == $pegawaiRoleId;
-                //     }),
-                // dd(Role::where('name', 'Pegawai')->value('id')),
                 Select::make('position_id')
                     ->relationship('position', 'name')
                     ->required(function (callable $get) {
                         $pegawaiRoleId = Role::where('name', 'Pegawai')->value('id');
                         $roles = $get('roles') ?? [];
-                        // dd($get('roles'), Role::where('name', 'Pegawai')->value('id'), in_array(2, [1, 2]));
                         return in_array($pegawaiRoleId, $roles);
                     })
                     ->preload()
@@ -86,23 +63,6 @@ class UserResource extends Resource
                         $roles = $get('roles') ?? [];
                         return in_array($pegawaiRoleId, $roles);
                     }),
-                // Select::make('position_id')
-                //     ->relationship('positions', 'name')
-                //     ->preload()
-                //     ->reactive()
-                //     ->dependsOn('roles') // supaya berubah saat roles berubah
-                //     ->required(function (callable $get) {
-                //         $pegawaiRoleId = Role::where('name', 'Pegawai')->first()?->id;
-                //         $roles = $get('roles') ?? [];
-                //         return in_array($pegawaiRoleId, $roles);
-                //     })
-                //     ->visible(function (callable $get) {
-                //         $pegawaiRoleId = Role::where('name', 'Pegawai')->first()?->id;
-                //         $roles = $get('roles') ?? [];
-                //         return in_array($pegawaiRoleId, $roles);
-                //     })
-                //     ->label('Jabatan'),
-
             ]);
     }
 
@@ -120,34 +80,35 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('position.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('deleted_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                Tables\Filters\TrashedFilter::make(),
-            ])
+            // ->filters([
+            //     Tables\Filters\TrashedFilter::make(),
+            // ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                ]),
-            ]);
+            // ->bulkActions([
+            //     Tables\Actions\BulkActionGroup::make([
+            //         Tables\Actions\DeleteBulkAction::make(),
+            //         Tables\Actions\ForceDeleteBulkAction::make(),
+            //         Tables\Actions\RestoreBulkAction::make(),
+            //     ]),
+            // ]);
+            ->paginated(false);
     }
 
     public static function getRelations(): array
