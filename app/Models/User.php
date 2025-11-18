@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->belongsTo(Position::class);
     }
 
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

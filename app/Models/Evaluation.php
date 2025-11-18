@@ -5,12 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Criteria extends Model
+class Evaluation extends Model
 {
     //
     use SoftDeletes;
 
-    public function evaluationDetails()
+    protected $fillable = ['user_id', 'total_score', 'description'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function details()
     {
         return $this->hasMany(EvaluationDetail::class);
     }
