@@ -17,7 +17,7 @@ class CriteriaResource extends Resource
 {
     protected static ?string $model = Criteria::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public static function form(Form $form): Form
     {
@@ -53,9 +53,9 @@ class CriteriaResource extends Resource
                 //     ->sortable()
                 //     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            // ->filters([
-            //     Tables\Filters\TrashedFilter::make(),
-            // ])
+            ->filters([
+                Tables\Filters\TrashedFilter::make(),
+            ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
