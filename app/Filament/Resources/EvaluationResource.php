@@ -95,7 +95,7 @@ class EvaluationResource extends Resource
             //         Tables\Actions\RestoreBulkAction::make(),
             //     ]),
             // ]);
-        ;
+            ->paginated(false);
     }
 
     public static function getRelations(): array
@@ -117,9 +117,21 @@ class EvaluationResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+        $user = auth()->user();
+
+        // Jika admin → tampilkan semua data tanpa SoftDelete scope
+        if (auth()->user()->hasRole('Admin')) {
+            return parent::getEloquentQuery()
+                ->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]);
+        } else {
+            // Jika pegawai → tampilkan data miliknya saja
+            return parent::getEloquentQuery()
+                ->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ])
+                ->where('user_id', $user->id);
+        }
     }
 }
